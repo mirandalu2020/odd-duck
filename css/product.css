@@ -12,6 +12,8 @@ body{
 main {
   width: 1800px;
   margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 h1 {
@@ -22,7 +24,7 @@ h1 {
 }
 
 section {
-  background-color: rgba(231, 221, 83, 0.541);
+  background-color: rgba(231, 221, 83, 0.589);
   margin-bottom: 1rem;
   height: 600px;
   width: 100%;
@@ -40,18 +42,21 @@ img{
   margin: 10px auto 1px auto;
 }
 
-div{
+aside{
+  background-color: orangered;
+  width: fit-content;
   color: rgb(235, 209, 161);
   font-size: 20px;
+  padding: 10px;
+  margin: 3rem;
 }
 
 .clicksAllowed{
   width:fit-content;
-  padding:2px;
+  padding:10px;
   border: 1px solid black;
   color:white;
   background-color: rgb(241, 112, 6);
-  margin: 1rem 0 1rem 0;
   font-size: 30px;
 }
 
@@ -63,11 +68,19 @@ div{
 ul{
   list-style-type: disc;
   font-size: 20px;
-  margin-left: 1rem;
+  margin-left: 5rem;
+  width: 50%;
+  display: block;
 }
 
 li{
   margin:10px;
+}
+
+div{
+  padding: 20px;
+  background-color: white;
+  margin-right: 5rem;
 }
 
 
