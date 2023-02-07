@@ -3,7 +3,7 @@ console.log('Hello');
 
 
 let productContainer = document.querySelector('section');
-let resultButton = document.querySelector('section+div');
+let resultButton = document.querySelector('aside');
 let img1 = document.querySelector('section img:first-child');
 let img2 = document.querySelector('section img:nth-child(2)');
 let img3 = document.querySelector('section img:nth-child(3)');
@@ -11,10 +11,14 @@ let img3 = document.querySelector('section img:nth-child(3)');
 let clicks = 0;
 let maxClicksAllowed = 25;
 
-//state object holds the current state of the products
-const state = {
+//productArray object holds the current productArray of the products
+const productArray = {
   allProductArray:[],
+  productNameArray:[],
+  productClicksArray:[],
+  productViewsArray:[],
 };
+
 
 function Product(name, src){
   this.name = name;
@@ -23,29 +27,50 @@ function Product(name, src){
   this.clicks = 0;
 }
 
-function getRandomNumber() {
-  return Math.floor(Math.random() * state.allProductArray.length);
+function make_products(){
+  for (let path of images){
+    let name = path.replace('img/','').replace('.jpg','')
+    let product = new Product(name,path);
+    productArray.allProductArray.push(product);
+    productArray.productNameArray.push(product.name);
+  }
 }
 
-function renderProductImage() {
-  let product1 = getRandomNumber();
-  let product2 = getRandomNumber();
-  let product3 = getRandomNumber();
+function getRandomNumber() {
+  return Math.floor(Math.random() * productArray.allProductArray.length);
+}
 
+let randomNumberArr = [];
+function renderProductImage() {
+  while (randomNumberArr.length < 6) {
+    let randomNumber = getRandomNumber();
+    if (!randomNumberArr.includes(randomNumber)){
+      randomNumberArr.push(randomNumber);
+    }
+  }
+  //console.log(randomNumberArr);
+
+  let product1 = randomNumberArr.shift();
+  let product2 = randomNumberArr.shift();
+  let product3 = randomNumberArr.shift();
+  //console.log(randomNumberArr);
+
+/*
 while (product1 === product2 || product1 === product3 || product2 === product3) {
   product2 = getRandomNumber();
   product3 = getRandomNumber();
 } //close while loop
+*/
 
-img1.src = state.allProductArray[product1].src;
-img2.src = state.allProductArray[product2].src;
-img3.src = state.allProductArray[product3].src;
-img1.alt = state.allProductArray[product1].name;
-img2.alt = state.allProductArray[product2].name;
-img3.alt = state.allProductArray[product3].name;
-state.allProductArray[product1].views++;
-state.allProductArray[product2].views++;
-state.allProductArray[product3].views++;
+img1.src = productArray.allProductArray[product1].src;
+img2.src = productArray.allProductArray[product2].src;
+img3.src = productArray.allProductArray[product3].src;
+img1.alt = productArray.allProductArray[product1].name;
+img2.alt = productArray.allProductArray[product2].name;
+img3.alt = productArray.allProductArray[product3].name;
+productArray.allProductArray[product1].views++;
+productArray.allProductArray[product2].views++;
+productArray.allProductArray[product3].views++;
 };
 
 function handleClick(event) {
@@ -55,9 +80,9 @@ function handleClick(event) {
   clicks++;
 
   let clickProduct = event.target.alt;
-  for (let i=0; i<state.allProductArray.length; i++) {
-    if (clickProduct === state.allProductArray[i].name) {
-      state.allProductArray[i].clicks++;
+  for (let i=0; i<productArray.allProductArray.length; i++) {
+    if (clickProduct === productArray.allProductArray[i].name) {
+      productArray.allProductArray[i].clicks++;
       break;
     }
   }
@@ -69,6 +94,7 @@ function handleClick(event) {
     resultButton.className = 'clicksAllowed';
     productContainer.className = 'noVoting';
     images.className = 'noVoting';
+    renderChart()
   }
   else {
         renderProductImage();
@@ -76,10 +102,10 @@ function handleClick(event) {
 };
 
 function renderResults() {
-  let ul=document.querySelector('ul');
-  for (let i=0; i< state.allProductArray.length; i++) {
+  let ul=document.querySelector('section ul');
+  for (let i=0; i< productArray.allProductArray.length; i++) {
       let li = document.createElement('li');
-      li.textContent = `${state.allProductArray[i].name} was seen ${state.allProductArray[i].views} times and had ${state.allProductArray[i].clicks} votes.`;
+      li.textContent = `${productArray.allProductArray[i].name} was seen ${productArray.allProductArray[i].views} times and had ${productArray.allProductArray[i].clicks} votes.`;
       ul.appendChild(li);
     }
   };
@@ -105,23 +131,43 @@ let images = [
   'img/wine-glass.jpg'
 ]
 
-function make_products(){
-  for (let path of images){
-    let name = path.replace('img/','').replace('.jpg','')
-    let product = new Product(name,path);
-    state.allProductArray.push(product);
-  }
-}
-
-/*
-let bag = new Product('bag','../img/bag.jpg');
-let banana = new Product('banana','../img/banana.jpg'); 
-let bathroom = new Product('bathroom','../img/bathroom.jpg');
-let boots = new Product('boots','../img/boots.jpg');
-let breakfast = new Product('breakfast','../img/breakfast.jpg');
-*/
-
 make_products();
-
 renderProductImage();
-productContainer.addEventListener('click',handleClick)
+productContainer.addEventListener('click',handleClick);
+
+function renderChart() {
+  for (let i=0; i< productArray.allProductArray.length; i++) {
+    let productView = productArray.allProductArray[i].views; 
+    productArray.productViewsArray.push(productView)
+  };
+    console.log(productArray.productViewsArray);
+
+    
+  for (let i=0; i< productArray.allProductArray.length; i++) {
+    let productClick = productArray.allProductArray[i].clicks; 
+    productArray.productClicksArray.push(productClick)};
+  console.log(productArray.productClicksArray);
+
+  const ctx = document.getElementById('myChart');
+
+  const mixedChart = new Chart(ctx, {
+    data: {
+        datasets: [{
+            type: 'bar',
+            label: 'Number of Clicks',
+            data: productArray.productViewsArray,
+            borderColor: '#36A2EB',
+            backgroundColor: '#02285175',
+        }, {
+            type: 'line',
+            label: 'Frequency Shown',
+            data: productArray.productClicksArray,
+            borderColor:'#FFBF00',
+            fill:false,
+        }],
+        labels: productArray.productNameArray,
+        
+    },
+});
+
+}
