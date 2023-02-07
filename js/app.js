@@ -16,7 +16,6 @@ const state = {
   allProductArray:[],
 };
 
-
 function Product(name, src){
   this.name = name;
   this.src = src;
@@ -46,7 +45,7 @@ img2.alt = state.allProductArray[product2].name;
 img3.alt = state.allProductArray[product3].name;
 state.allProductArray[product1].views++;
 state.allProductArray[product2].views++;
-state.allProductArray[product3].views++
+state.allProductArray[product3].views++;
 };
 
 function handleClick(event) {
@@ -54,6 +53,7 @@ function handleClick(event) {
     alert('Please click on an image');
   }
   clicks++;
+
   let clickProduct = event.target.alt;
   for (let i=0; i<state.allProductArray.length; i++) {
     if (clickProduct === state.allProductArray[i].name) {
@@ -61,11 +61,14 @@ function handleClick(event) {
       break;
     }
   }
+
   if (clicks === maxClicksAllowed) {
+    let images = document.querySelector('img');
     productContainer.removeEventListener('click', handleClick);
     resultButton.addEventListener('click', renderResults);
     resultButton.className = 'clicksAllowed';
     productContainer.className = 'noVoting';
+    images.className = 'noVoting';
   }
   else {
         renderProductImage();
