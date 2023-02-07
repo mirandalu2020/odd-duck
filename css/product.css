@@ -1,0 +1,67 @@
+* {
+  box-sizing:border-box;
+}
+
+body{
+  background-color: beige;
+  width: 80%;
+  margin: auto;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+main {
+  width: 1800px;
+  margin-top: 3rem;
+}
+
+h1 {
+  font-size: 40px;
+  color: orangered;
+  font-weight: 500;
+  margin: 2rem 0 2rem 0;
+}
+
+section {
+  background-color: white;
+  margin-bottom: 1rem;
+  height: 600px;
+  width: 100%;
+}
+
+img{
+  width:30%;
+  height: 80%;
+  border-left: 1px solid orange;
+}
+
+div{
+  color: rgb(235, 209, 161);
+  font-size: 20px;
+}
+
+.clicksAllowed{
+  width:fit-content;
+  padding:2px;
+  border: 1px solid black;
+  color:white;
+  background-color: rgb(241, 112, 6);
+  margin: 1rem 0 1rem 0;
+  font-size: 30px;
+}
+
+.noVoting{
+  background-color: gray;
+}
+
+ul{
+  list-style-type: disc;
+  font-size: 20px;
+  margin-left: 1rem;
+}
+
+li{
+  margin:10px;
+}
+
+
+
