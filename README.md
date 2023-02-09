@@ -6,4 +6,4 @@
 
 ### Lighthouse Score (lab13)
 
-![Alt text](vscode-local:/c%3A/Users/james/Desktop/lighthouse-ducks.png)
+![lighthouse](img/lighthouse-ducks.png)
