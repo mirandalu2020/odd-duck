@@ -8,26 +8,62 @@ let img1 = document.querySelector('section img:first-child');
 let img2 = document.querySelector('section img:nth-child(2)');
 let img3 = document.querySelector('section img:nth-child(3)');
 
+let randomNumberArr = [];
 let clicks = 0;
-let maxClicksAllowed = 25;
+let maxClicksAllowed = 10;
+let images = [
+  'img/bag.jpg',
+  'img/banana.jpg',
+  'img/bathroom.jpg',
+  'img/boots.jpg',
+  'img/breakfast.jpg',
+  'img/bubblegum.jpg',
+  'img/chair.jpg',
+  'img/cthulhu.jpg',
+  'img/dog-duck.jpg',
+  'img/dragon.jpg',
+  'img/pen.jpg',
+  'img/pet-sweep.jpg',
+  'img/scissors.jpg',
+  'img/shark.jpg',
+  'img/tauntaun.jpg',
+  'img/unicorn.jpg',
+  'img/water-can.jpg',
+  'img/wine-glass.jpg'
+]
+
 
 //productArray object holds the current productArray of the products
-const productArray = {
+let productArray = {
   allProductArray:[],
   productNameArray:[],
   productClicksArray:[],
   productViewsArray:[],
 };
 
+function pageLoad() {
+  let getStoredProducts = localStorage.getItem('products');
+  if (getStoredProducts) {
+    console.log('Local storage');
+    let parsedProduct = JSON.parse(getStoredProducts); //the stored data
+    productArray = parsedProduct;
+    console.log(productArray.allProductArray)
+  }
 
-function Product(name, src){
+  else {
+    make_products();
+  }
+}
+
+
+function Product(name, src) {
   this.name = name;
   this.src = src;
   this.views = 0;
   this.clicks = 0;
 }
 
-function make_products(){
+function make_products() {
   for (let path of images){
     let name = path.substring(4, path.length - 4)
     //let name = path.replace('img/','').replace('.jpg','')
@@ -41,7 +77,7 @@ function getRandomNumber() {
   return Math.floor(Math.random() * productArray.allProductArray.length);
 }
 
-let randomNumberArr = [];
+
 function renderProductImage() {
   while (randomNumberArr.length < 6) {
     let randomNumber = getRandomNumber();
@@ -55,13 +91,6 @@ function renderProductImage() {
   let product2 = randomNumberArr.shift();
   let product3 = randomNumberArr.shift();
   //console.log(randomNumberArr);
-
-/*
-while (product1 === product2 || product1 === product3 || product2 === product3) {
-  product2 = getRandomNumber();
-  product3 = getRandomNumber();
-} //close while loop
-*/
 
 img1.src = productArray.allProductArray[product1].src;
 img2.src = productArray.allProductArray[product2].src;
@@ -95,8 +124,11 @@ function handleClick(event) {
     resultButton.className = 'clicksAllowed';
     productContainer.className = 'noVoting';
     images.className = 'noVoting';
-    renderChart()
+    let storeProducts = localStorage.setItem(
+      'products', JSON.stringify(productArray));
+      renderChart()
   }
+  
   else {
         renderProductImage();
   }
@@ -133,7 +165,9 @@ let images = [
   'img/sweep.png',
 ]
 
-make_products();
+
+pageLoad();
+//make_products();
 renderProductImage();
 productContainer.addEventListener('click',handleClick);
 
@@ -144,11 +178,13 @@ function renderChart() {
   };
     console.log(productArray.productViewsArray);
 
-    
+  let productClicksArray = [];  
   for (let i=0; i< productArray.allProductArray.length; i++) {
     let productClick = productArray.allProductArray[i].clicks; 
-    productArray.productClicksArray.push(productClick)};
-  console.log(productArray.productClicksArray);
+    productClicksArray.push(productClick);
+  };
+    console.log(productClicksArray);
+    console.log(productArray)
 
   const ctx = document.getElementById('myChart');
 
@@ -163,7 +199,7 @@ function renderChart() {
         }, {
             type: 'line',
             label: 'Frequency Shown',
-            data: productArray.productClicksArray,
+            data: productClicksArray,
             borderColor:'#FFBF00',
             fill:false,
         }],
@@ -171,5 +207,12 @@ function renderChart() {
         
     },
 });
-
 }
+//pack --user result button (stringify, set)
+//unpack --if local storage (getItem, parse)
+
+
+
+
+// note: in .parse() does NOT return JS instance of construcdtor as an instance, it will be shown as an object. The object must be passed back to the constructor function xxxx = new Constructur(xxxx.parameter1, xxxx.parameter2)
+//update what's on the current page
