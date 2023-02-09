@@ -65,7 +65,8 @@ function Product(name, src) {
 
 function make_products() {
   for (let path of images){
-    let name = path.replace('img/','').replace('.jpg','')
+    let name = path.substring(4, path.length - 4)
+    //let name = path.replace('img/','').replace('.jpg','')
     let product = new Product(name,path);
     productArray.allProductArray.push(product);
     productArray.productNameArray.push(product.name);
@@ -142,6 +143,27 @@ function renderResults() {
     }
   };
 
+let images = [
+  'img/bag.jpg',
+  'img/banana.jpg',
+  'img/bathroom.jpg',
+  'img/boots.jpg',
+  'img/breakfast.jpg',
+  'img/bubblegum.jpg',
+  'img/chair.jpg',
+  'img/cthulhu.jpg',
+  'img/dog-duck.jpg',
+  'img/dragon.jpg',
+  'img/pen.jpg',
+  'img/pet-sweep.jpg',
+  'img/scissors.jpg',
+  'img/shark.jpg',
+  'img/tauntaun.jpg',
+  'img/unicorn.jpg',
+  'img/water-can.jpg',
+  'img/wine-glass.jpg',
+  'img/sweep.png',
+]
 
 
 pageLoad();
