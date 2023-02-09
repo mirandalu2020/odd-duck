@@ -29,7 +29,8 @@ function Product(name, src){
 
 function make_products(){
   for (let path of images){
-    let name = path.replace('img/','').replace('.jpg','')
+    let name = path.substring(4, path.length - 4)
+    //let name = path.replace('img/','').replace('.jpg','')
     let product = new Product(name,path);
     productArray.allProductArray.push(product);
     productArray.productNameArray.push(product.name);
@@ -128,7 +129,8 @@ let images = [
   'img/tauntaun.jpg',
   'img/unicorn.jpg',
   'img/water-can.jpg',
-  'img/wine-glass.jpg'
+  'img/wine-glass.jpg',
+  'img/sweep.png',
 ]
 
 make_products();
