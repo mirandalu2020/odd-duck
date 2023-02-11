@@ -43,9 +43,9 @@ img{
 }
 
 aside{
-  background-color: orangered;
+  background-color: rgb(111, 0, 255);
   width: fit-content;
-  color: rgb(235, 209, 161);
+  color: rgb(223, 218, 211);
   font-size: 20px;
   padding: 10px;
   margin: 3rem;
