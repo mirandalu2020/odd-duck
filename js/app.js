@@ -10,7 +10,7 @@ let img3 = document.querySelector('section img:nth-child(3)');
 
 let randomNumberArr = [];
 let clicks = 0;
-let maxClicksAllowed = 10;
+let maxClicksAllowed = 25;
 
 
 //productArray object holds the current productArray of the products
@@ -43,20 +43,9 @@ let images = [
   'img/sweep.png',
 ]
 
-function pageLoad() {
-  let getStoredProducts = localStorage.getItem('products');
-  if (getStoredProducts) {
-    console.log('Local storage');
-    let parsedProduct = JSON.parse(getStoredProducts); //the stored data
-    productArray = parsedProduct;
-    console.log(productArray.allProductArray)
-  }
-
-  else {
-    make_products();
-  }
+function getRandomNumber() {
+  return Math.floor(Math.random() * productArray.allProductArray.length);
 }
-
 
 function Product(name, src) {
   this.name = name;
@@ -74,11 +63,6 @@ function make_products() {
     productArray.productNameArray.push(product.name);
   }
 }
-
-function getRandomNumber() {
-  return Math.floor(Math.random() * productArray.allProductArray.length);
-}
-
 
 function renderProductImage() {
   while (randomNumberArr.length < 6) {
@@ -121,9 +105,11 @@ function handleClick(event) {
 
   if (clicks === maxClicksAllowed) {
     let images = document.querySelector('img');
+    let graphContainer = document.querySelector('div')
     productContainer.removeEventListener('click', handleClick);
     resultButton.addEventListener('click', renderResults);
     resultButton.className = 'clicksAllowed';
+    graphContainer.className = 'clicksAllowed';
     productContainer.className = 'noVoting';
     images.className = 'noVoting';
     let storeProducts = localStorage.setItem(
@@ -144,6 +130,20 @@ function renderResults() {
       ul.appendChild(li);
     }
   };
+
+function pageLoad() {
+  let getStoredProducts = localStorage.getItem('products');
+  if (getStoredProducts) {
+    console.log('Local storage');
+    let parsedProduct = JSON.parse(getStoredProducts); //the stored data
+    productArray = parsedProduct;
+    console.log(productArray.allProductArray)
+  }
+
+  else {
+    make_products();
+  }
+}
 
 
 pageLoad();
@@ -188,11 +188,3 @@ function renderChart() {
     },
 });
 }
-//pack --user result button (stringify, set)
-//unpack --if local storage (getItem, parse)
-
-
-
-
-// note: in .parse() does NOT return JS instance of construcdtor as an instance, it will be shown as an object. The object must be passed back to the constructor function xxxx = new Constructur(xxxx.parameter1, xxxx.parameter2)
-//update what's on the current page
