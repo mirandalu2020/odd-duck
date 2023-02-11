@@ -10,7 +10,7 @@ body{
 }
 
 main {
-  width: 1800px;
+  width: 100%;
   margin-top: 3rem;
   display: flex;
   flex-wrap: wrap;
@@ -55,9 +55,11 @@ aside{
   width:fit-content;
   padding:10px;
   border: 1px solid black;
-  color:white;
-  background-color: rgb(241, 112, 6);
-  font-size: 30px;
+  color:rgba(238, 10, 10, 0.884);
+  background-color: rgb(240, 236, 233);
+  font-size: 50px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .noVoting{
@@ -79,7 +81,7 @@ li{
 
 div{
   padding: 20px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   margin-right: 5rem;
 }
 
