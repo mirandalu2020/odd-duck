@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
+
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  width:90%;
+  margin: auto;
+}
+
+header{
+  font-family: "Poppins", sans-serif;
+  height:2px;
+  /* border: 2px solid black; */
+}
+
+.content {
+  /* position: relative; */
+  width:700px;
+  margin:auto;
+}
+
+.content h1, .content h2 {
+  color: #fff;
+  font-size: 5em;
+  position: absolute;
+}
+
+.content h1 {
+  color: transparent;
+  -webkit-text-stroke: 2px #f49403;
+}
+
+.content h2 {
+  color: #f4b403;
+  animation: animate 4s ease-in-out infinite;
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    clip-path: polygon(
+      0% 45%,
+      16% 44%,
+      33% 50%,
+      54% 60%,
+      70% 61%,
+      84% 59%,
+      100% 52%,
+      100% 100%,
+      0% 100%
+    );
+  }
+
+  50% {
+    clip-path: polygon(
+      0% 60%,
+      15% 65%,
+      34% 66%,
+      51% 62%,
+      67% 50%,
+      84% 45%,
+      100% 46%,
+      100% 100%,
+      0% 100%
+    );
+  }
+}
+
+main{
+  margin:7rem auto;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+#productContainer{
+  width: fit-content;
+  display: grid;
+  grid-template: 600px 600px / 600px 600px;
+  border: 2px solid black;
+  row-gap: 2rem;
+  column-gap: 2rem;
+  margin:auto;
+}
+
+#productContainer img{
+  object-fit: stretch;
+  width:100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
+#chartContainer{
+  margin: 1rem 0;
+}
+
+button{
+  display:inline-block;
+  padding:0.35em 1.2em;
+  margin:0 0.3em 0.3em 0;
+  border-radius:0.12em;
+  text-decoration:none;
+  font-size: 20px;
+  font-weight:700;
+  color:#14010131;
+  border: 1px solid rgb(179, 159, 159);
+}
+
+.noVoting{
+  background-color: rgba(128, 128, 128, 0.747);
+}
+.noVoting img{
+  opacity: 60%;
+}
+
+button.clicksAllowed{
+  color:#f49403;
+  background-color: antiquewhite;
+}
+
+.clicksAllowed:hover{
+  text-shadow: 0 0 2em rgb(255, 255, 255);
+  color:#d37f11;
+  border-color:#ada9a946;
+}
