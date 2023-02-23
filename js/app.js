@@ -2,15 +2,16 @@
 console.log('Hello');
 
 
-let productContainer = document.querySelector('section');
-let resultButton = document.querySelector('aside');
+let productContainer = document.querySelector('#productContainer');
+let resultButton = document.querySelector('button');
 let img1 = document.querySelector('section img:first-child');
 let img2 = document.querySelector('section img:nth-child(2)');
 let img3 = document.querySelector('section img:nth-child(3)');
+let img4 = document.querySelector('section img:nth-child(4)');
 
 let randomNumberArr = [];
 let clicks = 0;
-let maxClicksAllowed = 25;
+let maxClicksAllowed = 10;
 
 
 //productArray object holds the current productArray of the products
@@ -65,7 +66,7 @@ function make_products() {
 }
 
 function renderProductImage() {
-  while (randomNumberArr.length < 6) {
+  while (randomNumberArr.length < 8) {
     let randomNumber = getRandomNumber();
     if (!randomNumberArr.includes(randomNumber)){
       randomNumberArr.push(randomNumber);
@@ -76,17 +77,21 @@ function renderProductImage() {
   let product1 = randomNumberArr.shift();
   let product2 = randomNumberArr.shift();
   let product3 = randomNumberArr.shift();
+  let product4 = randomNumberArr.shift();
   //console.log(randomNumberArr);
 
 img1.src = productArray.allProductArray[product1].src;
 img2.src = productArray.allProductArray[product2].src;
 img3.src = productArray.allProductArray[product3].src;
+img4.src = productArray.allProductArray[product4].src;
 img1.alt = productArray.allProductArray[product1].name;
 img2.alt = productArray.allProductArray[product2].name;
 img3.alt = productArray.allProductArray[product3].name;
+img4.alt = productArray.allProductArray[product4].name;
 productArray.allProductArray[product1].views++;
 productArray.allProductArray[product2].views++;
 productArray.allProductArray[product3].views++;
+productArray.allProductArray[product4].views++;
 };
 
 function handleClick(event) {
@@ -105,13 +110,14 @@ function handleClick(event) {
 
   if (clicks === maxClicksAllowed) {
     let images = document.querySelector('img');
-    let graphContainer = document.querySelector('div')
+    let graphContainer = document.querySelector('#chart')
     productContainer.removeEventListener('click', handleClick);
     resultButton.addEventListener('click', renderResults);
     resultButton.className = 'clicksAllowed';
     graphContainer.className = 'clicksAllowed';
     productContainer.className = 'noVoting';
     images.className = 'noVoting';
+    resultButton.removeAttribute('disabled');
     let storeProducts = localStorage.setItem(
       'products', JSON.stringify(productArray));
       renderChart()
@@ -147,7 +153,6 @@ function pageLoad() {
 
 
 pageLoad();
-//make_products();
 renderProductImage();
 productContainer.addEventListener('click',handleClick);
 
@@ -163,26 +168,34 @@ function renderChart() {
     let productClick = productArray.allProductArray[i].clicks; 
     productClicksArray.push(productClick);
   };
-    console.log(productClicksArray);
-    console.log(productArray)
+
+  let clickToView = [];
+  for (let ii in productClicksArray) {
+    let ratio = productClicksArray[ii] / productArray.productViewsArray[ii] *100
+    clickToView.push(ratio)
+  }
 
   const ctx = document.getElementById('myChart');
 
   const mixedChart = new Chart(ctx, {
     data: {
         datasets: [{
-            type: 'bar',
+            type: 'line',
             label: 'Number of Clicks',
             data: productArray.productViewsArray,
             borderColor: '#36A2EB',
-            backgroundColor: '#02285175',
         }, {
             type: 'line',
-            label: 'Frequency Shown',
+            label: 'Number of Views',
             data: productClicksArray,
-            borderColor:'#FFBF00',
-            fill:false,
-        }],
+            borderColor:'#FFBF0075',
+        },{
+          type: 'bar',
+          label: 'Click to View Ratio (%)',
+          data: clickToView,
+          borderColor:'#FFBF00',
+          backgroundColor: '#02285175'
+      }],
         labels: productArray.productNameArray,
         
     },
